@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/spark-md5/3.0.2/spark-md5.min.js"></script>
+</head>
+<body>
+    <input
+    type="file"
+    id="file"
+  />
+  
+  <script>
+    /**
+     * 计算文件md5值
+     */
+    function getFileMd5(file) {
+      return new Promise((resolve, reject) => {
+        let fileReader = new FileReader()
+  
+        fileReader.onload = function (event) {
+          let fileMd5 = SparkMD5.ArrayBuffer.hash(event.target.result)
+          resolve(fileMd5)
+        }
+  
+        fileReader.readAsArrayBuffer(file)
+      })
+    }
+  
+    document.getElementById('file').onchange = function (event) {
+      let file = event.target.files[0]
+  
+      getFileMd5(file).then((md5) => {
+        console.log(md5)
+        // e311a516191b1643e3f63cb05163d11a
+      })
+    }
+  </script>
+
+</body>
+
+</html>
